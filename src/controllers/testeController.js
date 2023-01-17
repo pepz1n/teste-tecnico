@@ -28,12 +28,12 @@ export default class testeController {
       const { id } = req.params;
 
       if (id) {
-        response = await this.#findTesteById(id);
+        response = await this.#findTesteById(id) || [];
+      } else {
+        response = await Teste.findAll({
+          order: [['id', 'asc']],
+        });
       }
-
-      response = await Teste.findAll({
-        order: [['id', 'asc']],
-      });
 
       return res.status(200).send({ message: response.length ? 'Busca feita com sucesso' : 'Nenhum usuário encontrado', data: response });
     } catch (error) {

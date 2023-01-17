@@ -9,6 +9,9 @@ const Teste = sequelize.define(
       primaryKey: true,
       autoIncrement: true,
     },
+    nome: {
+      type: DataTypes.STRING,
+    },
   },
   {
     freezeTableName: true,

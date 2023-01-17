@@ -7,14 +7,14 @@
 ```bash
     sudo npm install
 ``` 
-* Após instalar, deve criar o banco (recomendo usar PGAdmin ou outro app, caso não possa use o terminal): 
+* Após instalar, deve criar o banco (recomendo usar PGAdmin ou outro app, caso não possa, use o terminal): 
 
 ```bash
   sudo -u postgres psql #para conectar como user postgres, ou como desejar;
   CREATE DATABASE <Nome-do-banco> ;
 ```
 
-* Após criar o banco de dados, deve criar um arquivo *** .env *** com os seguintes campos:
+* Após criar o banco de dados, deve criar um arquivo  ***.env***  com os seguintes campos:
   
 ```bash
   API_PORT=3333

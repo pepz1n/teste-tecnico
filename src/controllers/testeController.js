@@ -1,4 +1,4 @@
-import Teste from "../models/Teste.js";
+import Teste from '../models/Teste.js';
 
 export default class testeController {
   static get = async (req, res) => {

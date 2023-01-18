@@ -1,6 +1,23 @@
-# teste-técnico
+# **teste-técnico**
 
-## Instalação
+## **Dependências**
+  - [NodeJS](https://nodejs.org/en/) (Utilizando a versão 18.12.1 LTS pelo NVM)
+  - [NPM](https://www.npmjs.com/)
+  - [Postgres](https://www.postgresql.org/download/) (Utilizando a versão 15.1)
+
+## **Pacotes Utilizados**
+
+### Produção
+  - [DOTENV](https://www.npmjs.com/package/dotenv)
+  - [ESM](https://www.npmjs.com/package/esm)
+  - [EXPRESS](https://expressjs.com/pt-br/)
+  - [PG](https://node-postgres.com/)
+  - [SEQUELIZE](https://sequelize.org/)
+
+### Dev
+  - [NODEMON](https://nodemon.io/)
+  - [ESLINT](https://eslint.org/)
+## **Instalação**
 
 * Após clonar o projeto, rodar:
 
@@ -30,4 +47,10 @@
 ```bash
     sudo npm run dev
 ``` 
+> Nota: A api rodará em http://localhost:3333
 
+## **Modelagem do Banco de dados**
+
+![Imagem do banco modelado](../teste-tecnico/src/assets/banco-logico-modelagem.png)
+
+> Nota: Modelagem feita no [BR Modelo Web]('[htt](https://app.brmodeloweb.com)')

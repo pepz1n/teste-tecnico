@@ -4,6 +4,7 @@ import Filme from './Filme.js';
 import PadraoLugares from './PadraoLugares.js';
 import Parametro from './Parametro.js';
 import Sala from './Sala.js';
+import Sessao from './Sessao.js';
 import Usuario from './Usuario.js';
 
 (async () => {
@@ -14,4 +15,5 @@ import Usuario from './Usuario.js';
   await PadraoLugares.sync({ force: true });
   await Sala.sync({ force: true });
   await Usuario.sync({ force: true });
+  await Sessao.sync({ force: true });
 })();

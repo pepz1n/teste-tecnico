@@ -22,7 +22,7 @@ const Filme = sequelize.define(
       allowNull: false,
     },
     duracao: {
-      type: DataTypes.NUMERIC,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
   },

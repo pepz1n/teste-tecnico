@@ -51,6 +51,6 @@
 
 ## **Modelagem do Banco de dados**
 
-![Imagem do banco modelado]('https://raw.githubusercontent.com/pepz1n/teste-tecnico/main/src/assets/banco-logico-modelagem.png')
+![Imagem do banco modelado](https://raw.githubusercontent.com/pepz1n/teste-tecnico/main/src/assets/banco-logico-modelagem.png)
 
 > Nota: Modelagem feita no [BR Modelo Web](https://app.brmodeloweb.com)

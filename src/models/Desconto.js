@@ -1,8 +1,8 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config';
 
-const Parametro = sequelize.define(
-  'parametros',
+const Desconto = sequelize.define(
+  'descontos',
   {
     id: {
       type: DataTypes.INTEGER,
@@ -17,6 +17,11 @@ const Parametro = sequelize.define(
       type: DataTypes.STRING(150),
       allowNull: false,
     },
+    porcentagem: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
+    },
   },
   {
     freezeTableName: true,
@@ -26,4 +31,4 @@ const Parametro = sequelize.define(
   },
 );
 
-export default Parametro;
+export default Desconto;

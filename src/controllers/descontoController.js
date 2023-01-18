@@ -1,14 +1,14 @@
-import Teste from '../models/Teste.js';
+import Desconto from '../models/Desconto.js';
 import trataError from '../utils/trataError.js';
 
-export default class testeController {
-  static #findTesteById = (id) => Teste.findOne({ where: { id } });
+export default class DescontoController {
+  static #findTesteById = (id) => Desconto.findOne({ where: { id } });
 
   static #update = async (id, dados, res) => {
     const getTest = await this.#findTesteById(id);
 
     if (!getTest) {
-      return trataError.badRequest(res, 'Nenhum Teste encontrado para ser atualizado!');
+      return trataError.badRequest(res, 'Nenhum registro encontrado para ser atualizado!');
     }
 
     Object.keys(dados).forEach((field) => getTest[field] = dados[field]);
@@ -18,8 +18,8 @@ export default class testeController {
   };
 
   static #create = async (dados, res) => {
-    const response = await Teste.create(dados);
-    return res.status(200).send({ message: 'Teste cadastrado com sucesso', data: response });
+    const response = await Desconto.create(dados);
+    return res.status(200).send({ message: 'Registro cadastrado com sucesso', data: response });
   };
 
   static get = async (req, res) => {
@@ -30,12 +30,16 @@ export default class testeController {
       if (id) {
         response = await this.#findTesteById(id) || [];
       } else {
-        response = await Teste.findAll({
+        response = await Desconto.findAll({
           order: [['id', 'asc']],
         });
       }
 
-      return res.status(200).send({ message: response.length ? 'Busca feita com sucesso' : 'Nenhum usuário encontrado', data: response });
+      if (!response.length && !response.id) {
+        return await trataError.badRequest(res, id ? `Nenhum registro encontrado com o id ${id}` : 'Nenhum registro encontrado');
+      }
+
+      return res.status(200).send({ message: 'Busca feita com sucesso', data: response });
     } catch (error) {
       return trataError.internalError(res, error);
     }
@@ -63,15 +67,15 @@ export default class testeController {
         return trataError.badRequest(res, 'Nenhum Id informado!');
       }
 
-      const teste = await this.#findTesteById(id);
+      const response = await this.#findTesteById(id);
 
-      if (!teste) {
-        return trataError.badRequest(res, 'Nenhum Teste encontrado para ser excluido!');
+      if (!response) {
+        return trataError.badRequest(res, 'Nenhum registro encontrado para ser excluido!');
       }
 
-      await teste.destroy();
+      await response.destroy();
 
-      return res.status(200).send({ message: 'Teste excluido com sucesso', data: [] });
+      return res.status(200).send({ message: 'Registro excluido com sucesso', data: [] });
     } catch (error) {
       return trataError.internalError(res, error);
     }

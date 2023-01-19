@@ -130,3 +130,7 @@ export default class SessaoController {
     }
   };
 }
+// TODO
+// QUANTIDADE INGRESSOS VENDIDOS;
+// VALOR FINAL DA SESSAO;
+// VER SESSOES DISPONIVEIS PARA VENDA DE INGRESSO;

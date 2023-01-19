@@ -1,20 +1,20 @@
 import Usuario from '../models/Usuario.js';
 import trataError from '../utils/trataError.js';
 
-export default class CargoController {
-  static #findTesteById = (id) => Usuario.findOne({ where: { id } });
+export default class UsuarioController {
+  static #findUsuarioById = (id) => Usuario.findOne({ where: { id } });
 
   static #update = async (id, dados, res) => {
-    const getTest = await this.#findTesteById(id);
+    const getUsuario = await this.#findUsuarioById(id);
 
-    if (!getTest) {
+    if (!getUsuario) {
       return trataError.badRequest(res, 'Nenhum registro encontrado para ser atualizado!');
     }
 
-    Object.keys(dados).forEach((field) => getTest[field] = dados[field]);
-    await getTest.save();
+    Object.keys(dados).forEach((field) => getUsuario[field] = dados[field]);
+    await getUsuario.save();
 
-    return res.status(200).send({ message: `Cadastro de id: ${getTest.id} atualizado com sucesso`, data: getTest });
+    return res.status(200).send({ message: `Cadastro de id: ${getUsuario.id} atualizado com sucesso`, data: getUsuario });
   };
 
   static #create = async (dados, res) => {
@@ -28,7 +28,7 @@ export default class CargoController {
       const { id } = req.params;
 
       if (id) {
-        response = await this.#findTesteById(id) || [];
+        response = await this.#findUsuarioById(id) || [];
       } else {
         response = await Usuario.findAll({
           order: [['id', 'asc']],
@@ -67,7 +67,7 @@ export default class CargoController {
         return trataError.badRequest(res, 'Nenhum Id informado!');
       }
 
-      const response = await this.#findTesteById(id);
+      const response = await this.#findUsuarioById(id);
 
       if (!response) {
         return trataError.badRequest(res, 'Nenhum registro encontrado para ser excluido!');
@@ -81,3 +81,8 @@ export default class CargoController {
     }
   };
 }
+
+// TO DO
+// Comprar sessao;
+// Validar descontos;
+// Cancelar COmpra

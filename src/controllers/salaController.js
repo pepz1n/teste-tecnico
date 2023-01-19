@@ -2,19 +2,19 @@ import Sala from '../models/Sala.js';
 import trataError from '../utils/trataError.js';
 
 export default class CargoController {
-  static #findTesteById = (id) => Sala.findOne({ where: { id } });
+  static #findSalaById = (id) => Sala.findOne({ where: { id } });
 
   static #update = async (id, dados, res) => {
-    const getTest = await this.#findTesteById(id);
+    const getSala = await this.#findSalaById(id);
 
-    if (!getTest) {
+    if (!getSala) {
       return trataError.badRequest(res, 'Nenhum registro encontrado para ser atualizado!');
     }
 
-    Object.keys(dados).forEach((field) => getTest[field] = dados[field]);
-    await getTest.save();
+    Object.keys(dados).forEach((field) => getSala[field] = dados[field]);
+    await getSala.save();
 
-    return res.status(200).send({ message: `Cadastro de id: ${getTest.id} atualizado com sucesso`, data: getTest });
+    return res.status(200).send({ message: `Cadastro de id: ${getSala.id} atualizado com sucesso`, data: getSala });
   };
 
   static #create = async (dados, res) => {
@@ -28,7 +28,7 @@ export default class CargoController {
       const { id } = req.params;
 
       if (id) {
-        response = await this.#findTesteById(id) || [];
+        response = await this.#findSalaById(id) || [];
       } else {
         response = await Sala.findAll({
           order: [['id', 'asc']],
@@ -67,7 +67,7 @@ export default class CargoController {
         return trataError.badRequest(res, 'Nenhum Id informado!');
       }
 
-      const response = await this.#findTesteById(id);
+      const response = await this.#findSalaById(id);
 
       if (!response) {
         return trataError.badRequest(res, 'Nenhum registro encontrado para ser excluido!');

@@ -2,19 +2,19 @@ import PadraoLugares from '../models/PadraoLugares.js';
 import trataError from '../utils/trataError.js';
 
 export default class PadraoLugaresController {
-  static #findTesteById = (id) => PadraoLugares.findOne({ where: { id } });
+  static #findPadraoLugaresById = (id) => PadraoLugares.findOne({ where: { id } });
 
   static #update = async (id, dados, res) => {
-    const getTest = await this.#findTesteById(id);
+    const getPadraoLugares = await this.#findPadraoLugaresById(id);
 
-    if (!getTest) {
+    if (!getPadraoLugares) {
       return trataError.badRequest(res, 'Nenhum registro encontrado para ser atualizado!');
     }
 
-    Object.keys(dados).forEach((field) => getTest[field] = dados[field]);
-    await getTest.save();
+    Object.keys(dados).forEach((field) => getPadraoLugares[field] = dados[field]);
+    await getPadraoLugares.save();
 
-    return res.status(200).send({ message: `Cadastro de id: ${getTest.id} atualizado com sucesso`, data: getTest });
+    return res.status(200).send({ message: `Cadastro de id: ${getPadraoLugares.id} atualizado com sucesso`, data: getPadraoLugares });
   };
 
   static #create = async (dados, res) => {
@@ -28,7 +28,7 @@ export default class PadraoLugaresController {
       const { id } = req.params;
 
       if (id) {
-        response = await this.#findTesteById(id) || [];
+        response = await this.#findPadraoLugaresById(id) || [];
       } else {
         response = await PadraoLugares.findAll({
           order: [['id', 'asc']],
@@ -67,7 +67,7 @@ export default class PadraoLugaresController {
         return trataError.badRequest(res, 'Nenhum Id informado!');
       }
 
-      const response = await this.#findTesteById(id);
+      const response = await this.#findPadraoLugaresById(id);
 
       if (!response) {
         return trataError.badRequest(res, 'Nenhum registro encontrado para ser excluido!');

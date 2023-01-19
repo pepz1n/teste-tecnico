@@ -2,19 +2,19 @@ import Desconto from '../models/Desconto.js';
 import trataError from '../utils/trataError.js';
 
 export default class DescontoController {
-  static #findTesteById = (id) => Desconto.findOne({ where: { id } });
+  static #findDescontoById = (id) => Desconto.findOne({ where: { id } });
 
   static #update = async (id, dados, res) => {
-    const getTest = await this.#findTesteById(id);
+    const getDesconto = await this.#findDescontoById(id);
 
-    if (!getTest) {
+    if (!getDesconto) {
       return trataError.badRequest(res, 'Nenhum registro encontrado para ser atualizado!');
     }
 
-    Object.keys(dados).forEach((field) => getTest[field] = dados[field]);
-    await getTest.save();
+    Object.keys(dados).forEach((field) => getDesconto[field] = dados[field]);
+    await getDesconto.save();
 
-    return res.status(200).send({ message: `Cadastro de id: ${getTest.id} atualizado com sucesso`, data: getTest });
+    return res.status(200).send({ message: `Cadastro de id: ${getDesconto.id} atualizado com sucesso`, data: getDesconto });
   };
 
   static #create = async (dados, res) => {
@@ -28,7 +28,7 @@ export default class DescontoController {
       const { id } = req.params;
 
       if (id) {
-        response = await this.#findTesteById(id) || [];
+        response = await this.#findDescontoById(id) || [];
       } else {
         response = await Desconto.findAll({
           order: [['id', 'asc']],
@@ -67,7 +67,7 @@ export default class DescontoController {
         return trataError.badRequest(res, 'Nenhum Id informado!');
       }
 
-      const response = await this.#findTesteById(id);
+      const response = await this.#findDescontoById(id);
 
       if (!response) {
         return trataError.badRequest(res, 'Nenhum registro encontrado para ser excluido!');

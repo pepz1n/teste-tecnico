@@ -12,7 +12,6 @@ const Sala = sequelize.define(
     },
     observacao: {
       type: DataTypes.STRING(500),
-      allowNull: false,
     },
   },
   {

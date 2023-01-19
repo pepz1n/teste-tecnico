@@ -13,6 +13,7 @@
   - [EXPRESS](https://expressjs.com/pt-br/)
   - [PG](https://node-postgres.com/)
   - [SEQUELIZE](https://sequelize.org/)
+  - [MOMENTJS](https://momentjs.com/timezone/)
 
 ### Dev
   - [NODEMON](https://nodemon.io/)
@@ -40,6 +41,7 @@
   POSTGRES_USERNAME=postgres
   POSTGRES_PASSWORD= #Sua senha do postgres
   POSTGRES_PORT=5432
+  TIMEZONE=America/Sao_Paulo
 ```
 
 * Após a instalação rodar o servidor:

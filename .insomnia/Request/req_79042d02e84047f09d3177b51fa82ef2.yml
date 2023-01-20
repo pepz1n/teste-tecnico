@@ -1,0 +1,28 @@
+_id: req_79042d02e84047f09d3177b51fa82ef2
+type: Request
+parentId: fld_a648596197cb4c06a09af9b833de6d0e
+modified: 1674077256241
+created: 1673986591692
+url: localhost:3333/desconto/1
+name: destroy
+description: ""
+method: DELETE
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"nome": "Bernardo Zanetti"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1673985923800
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

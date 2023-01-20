@@ -1,0 +1,21 @@
+_id: req_edea026762e140dc830f40ec4856cc4d
+type: Request
+parentId: fld_7d1a86f6939a475d9fd82d1a6f5200e2
+modified: 1674069762350
+created: 1674069505015
+url: localhost:3333/padrao-lugares/1
+name: get by id
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1673985923950
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

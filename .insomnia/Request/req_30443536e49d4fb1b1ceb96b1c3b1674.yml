@@ -1,0 +1,32 @@
+_id: req_30443536e49d4fb1b1ceb96b1c3b1674
+type: Request
+parentId: fld_7641545456cf4238958706a493d62323
+modified: 1674094728634
+created: 1674094611544
+url: localhost:3333/usuario/1
+name: persist:edit
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"nome": "Bernardo Cortina Zanetti",
+    	"email": "bebezanetti@gmail.com",
+    	"cpf": "089.225.189-10",
+    	"idCargo": 1,
+    	"estudante": true
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1673985923850
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

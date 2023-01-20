@@ -1,0 +1,31 @@
+_id: req_9ba29ab845b9405ea1045f8ac71c40b0
+type: Request
+parentId: fld_1de30b09073940b887770c6df405d49c
+modified: 1674082591804
+created: 1674082458676
+url: localhost:3333/filme
+name: persist:create
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"nome": "Avatar 2",
+    	"descricao": "muita coisa",
+    	"autor": "James Cameron",
+    	"duracao": 192
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1673985923900
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

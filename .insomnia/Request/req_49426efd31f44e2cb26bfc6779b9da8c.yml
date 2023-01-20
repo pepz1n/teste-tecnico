@@ -1,0 +1,28 @@
+_id: req_49426efd31f44e2cb26bfc6779b9da8c
+type: Request
+parentId: fld_b0fb583acbee4b90b3534f03555fe1cc
+modified: 1674071635653
+created: 1674071384304
+url: localhost:3333/cargo/1
+name: persist:edit
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"descricao": "user"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1673985923850
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

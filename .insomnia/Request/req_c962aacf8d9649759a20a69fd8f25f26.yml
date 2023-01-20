@@ -1,0 +1,30 @@
+_id: req_c962aacf8d9649759a20a69fd8f25f26
+type: Request
+parentId: fld_a648596197cb4c06a09af9b833de6d0e
+modified: 1674077252952
+created: 1673986029319
+url: localhost:3333/desconto/1
+name: persist:edit
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"chave": "estudante",
+    	"valor": "50",
+    	"porcentagem": true
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1673985923850
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

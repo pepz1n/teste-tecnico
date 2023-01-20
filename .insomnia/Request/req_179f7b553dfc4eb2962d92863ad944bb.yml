@@ -1,0 +1,21 @@
+_id: req_179f7b553dfc4eb2962d92863ad944bb
+type: Request
+parentId: fld_1de30b09073940b887770c6df405d49c
+modified: 1674082599807
+created: 1674082458675
+url: localhost:3333/filme/1
+name: get by id
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1673985923950
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

@@ -1,0 +1,29 @@
+_id: req_aaa73843426446d8845db12b20ff71a7
+type: Request
+parentId: fld_47c0c895dcb34dd48a47938e8354aed0
+modified: 1674094373360
+created: 1674094206647
+url: localhost:3333/sala/1
+name: persist:edit
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"idPadraoLugares": 1,
+    	"observacao": null
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1673985923850
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

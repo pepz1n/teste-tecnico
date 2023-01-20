@@ -1,0 +1,21 @@
+_id: req_a9f004cf91ba467e87410ece062ea72c
+type: Request
+parentId: fld_47c0c895dcb34dd48a47938e8354aed0
+modified: 1674094219133
+created: 1674094206643
+url: localhost:3333/sala/1
+name: get by id
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1673985923950
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

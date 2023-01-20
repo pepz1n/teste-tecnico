@@ -1,0 +1,43 @@
+_id: req_80fefcd5fa234e08b1fa47aa9a6845fa
+type: Request
+parentId: fld_7d1a86f6939a475d9fd82d1a6f5200e2
+modified: 1674160322157
+created: 1674069505018
+url: localhost:3333/padrao-lugares/1
+name: persist:edit
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"lugares": [
+    		{
+    			"id": 1,
+    			"linha": 1,
+    			"coluna": 1,
+    			"vendido": false,
+    			"idUsuario": null
+    		},
+    		{
+    			"id": 2,
+    			"linha": 2,
+    			"coluna": 1,
+    			"vendido": false,
+    			"idUsuario": null
+    		}
+    	]
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1673985923850
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

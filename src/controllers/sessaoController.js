@@ -129,8 +129,36 @@ export default class SessaoController {
       return trataError.internalError(res, error);
     }
   };
+
+  static relatorioSessao = async (req, res) => {
+    try {
+      const { idSessao } = req.params;
+
+      if (!idSessao) {
+        return trataError.badRequest(res, 'Nenhum id informado');
+      }
+
+      const getSessao = await this.#findSessaoById(idSessao);
+
+      if (!getSessao) {
+        return trataError.badRequest(res, `Nenhum registro informado com id ${idSessao}`);
+      }
+
+      const response = await sequelize.query(`
+        select
+          count(us.id) as vendidos,
+          sum(us.valor_atual) as "valorTotal"
+        from usuario_sessoes as us
+        where us.id_sessao = ${idSessao}
+      `).then((a) => a[0][0]);
+
+      response.valorTotal = response.valorTotal ? response.valorTotal.toFiexed(2) : 0.00;
+
+      return res.status(200).send({ message: 'Dados resgatados com sucesso', data: response });
+    } catch (error) {
+      return trataError.internalError(res, error);
+    }
+  };
 }
 // TODO
-// QUANTIDADE INGRESSOS VENDIDOS;
-// VALOR FINAL DA SESSAO;
 // VER SESSOES DISPONIVEIS PARA VENDA DE INGRESSO;

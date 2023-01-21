@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import Filme from '../models/Filme.js';
 import Sessao from '../models/Sessao.js';
 import trataError from '../utils/trataError.js';
@@ -176,6 +177,35 @@ export default class SessaoController {
       response.valorTotal = response.valorTotal ? response.valorTotal.toFixed(2) : 0.00;
 
       return res.status(200).send({ message: 'Dados resgatados com sucesso', data: response });
+    } catch (error) {
+      return trataError.internalError(res, error);
+    }
+  };
+
+  static getSessoesDisponiveis = async (req, res) => {
+    try {
+      const sessoes = await Sessao.findAll({
+        where: {
+          dataFim: {
+            [Op.gt]: new Date(),
+          },
+        },
+        order: [['id', 'asc']],
+      });
+
+      if (!sessoes.length) {
+        return trataError.badRequest(res, 'Nenhuma sessão disponivel para a compra!');
+      }
+
+      const sessoesFiltradas = sessoes.filter((a) => {
+        const lugares = a.lugares.filter((b) => !b.vendido);
+        if (lugares.length) {
+          return true;
+        }
+        return true;
+      });
+
+      return res.send(sessoesFiltradas);
     } catch (error) {
       return trataError.internalError(res, error);
     }

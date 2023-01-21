@@ -19,7 +19,7 @@ export default class CargoController {
 
   static #create = async (dados, res) => {
     const response = await Cargo.create(dados);
-    return res.status(200).send({ message: 'Registro cadastrado com sucesso', data: response });
+    return res.status(201).send({ message: 'Registro cadastrado com sucesso', data: response });
   };
 
   static get = async (req, res) => {

@@ -12,6 +12,7 @@ const Desconto = sequelize.define(
     chave: {
       type: DataTypes.STRING(150),
       allowNull: false,
+      unique: true,
     },
     valor: {
       type: DataTypes.STRING(150),

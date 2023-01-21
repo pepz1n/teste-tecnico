@@ -76,7 +76,7 @@ export default class SessaoController {
     response.dataFim = dateAux.formatDate(response.dataFim);
     response.dataInicio = dateAux.formatDate(response.dataInicio);
 
-    return res.status(200).send({ message: 'Registro cadastrado com sucesso', data: response });
+    return res.status(201).send({ message: 'Registro cadastrado com sucesso', data: response });
   };
 
   static get = async (req, res) => {
@@ -203,9 +203,14 @@ export default class SessaoController {
           return true;
         }
         return true;
+      }).map((item) => {
+        const itemFormatado = item.toJSON();
+        itemFormatado.dataFim = dateAux.formatDate(itemFormatado.dataFim);
+        itemFormatado.dataInicio = dateAux.formatDate(itemFormatado.dataInicio);
+        return itemFormatado;
       });
 
-      return res.send(sessoesFiltradas);
+      return res.status(200).send({ message: 'Dados resgatados com sucesso', data: sessoesFiltradas });
     } catch (error) {
       return trataError.internalError(res, error);
     }

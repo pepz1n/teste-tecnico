@@ -186,7 +186,7 @@ export default class SessaoController {
     try {
       const sessoes = await Sessao.findAll({
         where: {
-          dataFim: {
+          dataInicio: {
             [Op.gt]: new Date(),
           },
         },

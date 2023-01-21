@@ -16,12 +16,12 @@ const Sessao = sequelize.define(
       allowNull: false,
     },
     dataInicio: {
-      type: DataTypes.STRING(200),
+      type: DataTypes.DATE,
       allowNull: false,
       field: 'data_inicio',
     },
     dataFim: {
-      type: DataTypes.STRING(200),
+      type: DataTypes.DATE,
       allowNull: false,
       field: 'data_fim',
     },
@@ -32,9 +32,7 @@ const Sessao = sequelize.define(
   },
   {
     freezeTableName: true,
-    timestamps: true,
-    createdAt: 'created_at',
-    updatedAt: 'updated_at',
+    timestamps: false,
   },
 );
 

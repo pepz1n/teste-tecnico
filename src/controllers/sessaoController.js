@@ -1,8 +1,8 @@
-import moment from 'moment';
 import Filme from '../models/Filme.js';
 import Sessao from '../models/Sessao.js';
 import trataError from '../utils/trataError.js';
 import sequelize from '../config/index.js';
+import dateAux from '../utils/dateAux.js';
 
 export default class SessaoController {
   static #findSessaoById = (id) => Sessao.findOne({ where: { id } });
@@ -43,7 +43,12 @@ export default class SessaoController {
     Object.keys(dados).forEach((field) => getSessao[field] = dados[field]);
     await getSessao.save();
 
-    return res.status(200).send({ message: `Cadastro de id: ${getSessao.id} atualizado com sucesso`, data: getSessao });
+    const response = getSessao.toJSON();
+
+    response.dataFim = dateAux.formatDate(response.dataFim);
+    response.dataInicio = dateAux.formatDate(response.dataInicio);
+
+    return res.status(200).send({ message: `Cadastro de id: ${getSessao.id} atualizado com sucesso`, data: response });
   };
 
   static #getDataFim = async (idFilme, dataInicio) => {
@@ -57,13 +62,19 @@ export default class SessaoController {
       throw new Error('Filme não encontrado');
     }
 
-    return moment.tz(dataInicio, process.env.TIMEZONE).add(filme.duracao, 'minutes').format();
+    return dateAux.somaData(dataInicio, filme.duracao, 'minutes');
   };
 
   static #create = async (dados, res) => {
     dados.dataFim = await this.#getDataFim(dados.idFilme, dados.dataInicio);
     dados.lugares = await this.#getPadraoLugares(dados.idSala);
-    const response = await Sessao.create(dados);
+    let response = await Sessao.create(dados);
+
+    response = response.toJSON();
+
+    response.dataFim = dateAux.formatDate(response.dataFim);
+    response.dataInicio = dateAux.formatDate(response.dataInicio);
+
     return res.status(200).send({ message: 'Registro cadastrado com sucesso', data: response });
   };
 
@@ -73,10 +84,20 @@ export default class SessaoController {
       const { id } = req.params;
 
       if (id) {
-        response = await this.#findSessaoById(id) || [];
+        console.log(req.get('date'));
+        response = await this.#findSessaoById(id).then((a) => a && a.toJSON()) || [];
+        response.dataFim = dateAux.formatDate(response.dataFim);
+        response.dataInicio = dateAux.formatDate(response.dataInicio);
       } else {
         response = await Sessao.findAll({
           order: [['id', 'asc']],
+        });
+
+        response = response.map((item) => {
+          const itemFormatado = item.toJSON();
+          itemFormatado.dataFim = dateAux.formatDate(itemFormatado.dataFim);
+          itemFormatado.dataInicio = dateAux.formatDate(itemFormatado.dataInicio);
+          return itemFormatado;
         });
       }
 
@@ -95,7 +116,7 @@ export default class SessaoController {
       const { id } = req.params;
 
       if (req.body.dataInicio) {
-        req.body.dataInicio = moment.tz(req.body.dataInicio, process.env.TIMEZONE).format();
+        req.body.dataInicio = dateAux.formatDate(req.body.dataInicio);
       }
 
       if (id) {
@@ -141,7 +162,7 @@ export default class SessaoController {
       const getSessao = await this.#findSessaoById(idSessao);
 
       if (!getSessao) {
-        return trataError.badRequest(res, `Nenhum registro informado com id ${idSessao}`);
+        return trataError.badRequest(res, `Nenhum registro encontrado com id ${idSessao}`);
       }
 
       const response = await sequelize.query(`
@@ -152,7 +173,7 @@ export default class SessaoController {
         where us.id_sessao = ${idSessao}
       `).then((a) => a[0][0]);
 
-      response.valorTotal = response.valorTotal ? response.valorTotal.toFiexed(2) : 0.00;
+      response.valorTotal = response.valorTotal ? response.valorTotal.toFixed(2) : 0.00;
 
       return res.status(200).send({ message: 'Dados resgatados com sucesso', data: response });
     } catch (error) {

@@ -1,3 +1,4 @@
+import Sessao from '../models/Sessao.js';
 import Usuario from '../models/Usuario.js';
 import trataError from '../utils/trataError.js';
 
@@ -76,6 +77,29 @@ export default class UsuarioController {
       await response.destroy();
 
       return res.status(200).send({ message: 'Registro excluido com sucesso', data: [] });
+    } catch (error) {
+      return trataError.internalError(res, error);
+    }
+  };
+
+  static comprarSessao = async (req, res) => {
+    try {
+      const { idLugar } = req.params;
+      const dados = req.body;
+
+      if (!dados.idSessao || !dados.idUsuario || !idLugar) {
+        return trataError.badRequest(res, 'Informações inválidas');
+      }
+
+      const sessao = await Sessao.findOne({
+        where: {
+          id: dados.idSessao,
+        },
+      });
+
+      if (sessao) {
+        return trataError.badRequest(res, `Nenhuma sessão encontrada com o id ${dados.idSessao}`);
+      }
     } catch (error) {
       return trataError.internalError(res, error);
     }

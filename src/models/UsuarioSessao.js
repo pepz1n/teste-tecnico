@@ -19,9 +19,7 @@ const UsuarioSessao = sequelize.define(
   },
   {
     freezeTableName: true,
-    timestamps: true,
-    createdAt: 'created_at',
-    updatedAt: 'updated_at',
+    timestamps: false,
   },
 );
 

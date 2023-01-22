@@ -174,7 +174,7 @@ export default class SessaoController {
         where us.id_sessao = ${idSessao}
       `).then((a) => a[0][0]);
 
-      response.valorTotal = response.valorTotal ? response.valorTotal.toFixed(2) : 0.00;
+      response.valorTotal = response.valorTotal ? Number(response.valorTotal).toFixed(2) : 0.00;
 
       return res.status(200).send({ message: 'Dados resgatados com sucesso', data: response });
     } catch (error) {
@@ -202,7 +202,7 @@ export default class SessaoController {
         if (lugares.length) {
           return true;
         }
-        return true;
+        return false;
       }).map((item) => {
         const itemFormatado = item.toJSON();
         itemFormatado.dataFim = dateAux.formatDate(itemFormatado.dataFim);

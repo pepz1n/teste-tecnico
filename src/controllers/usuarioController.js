@@ -1,7 +1,12 @@
+import moment from 'moment';
 import { Op } from 'sequelize';
+import sequelize from '../config/index.js';
 import Desconto from '../models/Desconto.js';
 import Sessao from '../models/Sessao.js';
 import Usuario from '../models/Usuario.js';
+import UsuarioSessao from '../models/UsuarioSessao.js';
+import UsuarioSessaoDesconto from '../models/UsuarioSessaoDesconto.js';
+import dateAux from '../utils/dateAux.js';
 import trataError from '../utils/trataError.js';
 
 export default class UsuarioController {
@@ -94,24 +99,50 @@ export default class UsuarioController {
       }
 
       const usuario = await this.#findUsuarioById(dados.idUsuario);
+
+      if (!usuario) {
+        return trataError.badRequest(res, `Nenhum usuário encontrado com o id ${dados.idUsuario}`);
+      }
+
       usuario.idCargo = await usuario.getCargo();
 
       if (usuario.idCargo.descricao === 'atendente') {
         return trataError.badRequest(res, 'Atendentes não podem comprar ingressos');
       }
 
-      if (!usuario) {
-        return trataError.badRequest(res, `Nenhum usuário encontrado com o id ${dados.idUsuario}`);
-      }
-
-      const sessao = await Sessao.findOne({
+      const sessaoBanco = await Sessao.findOne({
         where: {
           id: dados.idSessao,
           dataInicio: {
-            [Op.gt]: new Date(),
+            [Op.gt]: new Date(Date.now()),
           },
         },
       });
+
+      const sessao = sessaoBanco.toJSON();
+
+      if (!sessao) {
+        return trataError.badRequest(res, `Nenhuma sessão válida encontrada com o id ${dados.idSessao}`);
+      }
+
+      const dataInicio = moment.tz(sessao.dataInicio, 'utc').format();
+      const dataFim = moment.tz(sessao.dataFim, 'utc').format();
+
+      const sessoesConflito = await sequelize.query(`
+        select
+          s.*
+        from sessoes as s
+        join usuario_sessoes as us on (s.id = us.id_sessao)
+        where us.id_usuario = ${usuario.id} and (('${dataInicio}' between s.data_inicio and s.data_fim) or ('${dataFim}' between s.data_inicio and s.data_fim) or ('${dataInicio}' < s.data_inicio and '${dataFim}' > s.data_fim));
+      `).then((a) => a[0]);
+
+      if (sessoesConflito.find((a) => a.id === sessao.id)) {
+        return trataError.badRequest(res, 'Usuário já comprou ingresso para essa sessão!');
+      }
+
+      if (sessoesConflito.length) {
+        return trataError.badRequest(res, 'Usuário já comprou ingresso para outra(s) sessões neste horário!');
+      }
 
       const indexLugar = sessao.lugares.findIndex((a) => a.id === Number(idLugar));
 
@@ -121,10 +152,6 @@ export default class UsuarioController {
 
       if (sessao.lugares[indexLugar].vendido) {
         return trataError.badRequest(res, 'Lugar escolhido já se encontra vendido!');
-      }
-
-      if (!sessao) {
-        return trataError.badRequest(res, `Nenhuma sessão válida encontrada com o id ${dados.idSessao}`);
       }
 
       const whereGetDesconto = [];
@@ -159,7 +186,28 @@ export default class UsuarioController {
         valorAtual,
       };
 
-      return console.log(usuarioSessoesReq);
+      const usuarioSessoesRes = await UsuarioSessao.create(usuarioSessoesReq);
+
+      descontos.forEach(async (desconto) => {
+        await UsuarioSessaoDesconto.create({ idUsuarioSessao: usuarioSessoesRes.id, idDesconto: desconto.id });
+      });
+
+      sessao.lugares[indexLugar].vendido = true;
+      sessao.lugares[indexLugar].idUsuario = usuario.id;
+      sessaoBanco.lugares = sessao.lugares;
+
+      await sessaoBanco.save();
+
+      sessaoBanco.idFilme = await sessaoBanco.getFilme();
+
+      const responseFim = {
+        Filme: sessaoBanco.idFilme.nome,
+        Sessão: dateAux.formatDate(sessao.dataInicio),
+        Valor: Number(sessao.preco),
+        ValorAtual: valorAtual,
+      };
+
+      return res.status(201).send(responseFim);
     } catch (error) {
       return trataError.internalError(res, error);
     }

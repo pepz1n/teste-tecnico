@@ -85,7 +85,6 @@ export default class SessaoController {
       const { id } = req.params;
 
       if (id) {
-        console.log(req.get('date'));
         response = await this.#findSessaoById(id).then((a) => a && a.toJSON()) || [];
         response.dataFim = dateAux.formatDate(response.dataFim);
         response.dataInicio = dateAux.formatDate(response.dataInicio);
@@ -216,5 +215,3 @@ export default class SessaoController {
     }
   };
 }
-// TODO
-// VER SESSOES DISPONIVEIS PARA VENDA DE INGRESSO;

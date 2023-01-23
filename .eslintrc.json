@@ -11,7 +11,6 @@
         "sourceType": "module"
     },
     "rules": {
-        "no-console":"off",
         "import/extensions": "off",
         "no-return-assign": "off",
         "no-param-reassign": "off",

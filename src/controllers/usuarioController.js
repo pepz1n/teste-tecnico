@@ -25,6 +25,21 @@ export default class UsuarioController {
     return res.status(200).send({ message: `Cadastro de id: ${getUsuario.id} atualizado com sucesso`, data: getUsuario });
   };
 
+  static #getSessoesFuturasCompradas = async (idUsuario) => {
+    const response = await sequelize.query(`
+    select
+      f.nome as "Filme",
+      s.data_fim as "DataFim",
+      s.preco as "Valor",
+      us.valor_atual as "ValorAtual"
+    from sessoes as s
+    join filmes as f on (f.id = s.id_filme)
+    join usuario_sessoes as us on (s.id = us.id_sessao)
+    where us.id_usuario = ${idUsuario}
+    `).then((a) => a[0]);
+    return response;
+  };
+
   static #create = async (dados, res) => {
     const response = await Usuario.create(dados);
     return res.status(201).send({ message: 'Registro cadastrado com sucesso', data: response });
@@ -212,9 +227,86 @@ export default class UsuarioController {
       return trataError.internalError(res, error);
     }
   };
-}
 
-// TO DO
-// Comprar sessao;
-// Validar descontos;
-// Cancelar COmpra
+  static sessoesCompradasNaoComeçadas = async (req, res) => {
+    try {
+      const { idUsuario } = req.params;
+
+      const usuario = await this.#findUsuarioById(idUsuario);
+
+      if (!usuario) {
+        return trataError.badRequest(res, `Não existe usuario com o id ${idUsuario}`);
+      }
+
+      if (!idUsuario) {
+        return trataError.badRequest(res, 'Nenhum id informado');
+      }
+
+      const response = await this.#getSessoesFuturasCompradas(idUsuario);
+
+      if (!response.length) {
+        return trataError.badRequest(res, 'O usuario não possui nenhuma sessão futura!');
+      }
+
+      return res.status(200).send({ data: response });
+    } catch (error) {
+      return trataError.internalError(res, error);
+    }
+  };
+
+  static cancelarSessao = async (req, res) => {
+    try {
+      const { idUsuario, idSessao } = req.body;
+
+      if (!idUsuario || !idSessao) {
+        return trataError.badRequest(res, 'Informações inválidas');
+      }
+
+      const sessao = await Sessao.findOne({
+        where: {
+          id: idSessao,
+        },
+      });
+
+      if (!sessao) {
+        return trataError.badRequest(res, `A sessão id ${idSessao} não existe!`);
+      }
+
+      if (sessao.dataInicio < new Date(Date.now())) {
+        return trataError.badRequest(res, 'O usuário não pode cancelar uma sessão que já aconteceu');
+      }
+
+      const usuarioSessao = await UsuarioSessao.findOne({
+        where: {
+          idSessao,
+          idUsuario,
+        },
+      });
+
+      if (!usuarioSessao) {
+        return trataError.badRequest(res, 'O usuário não tem compra para a sessão');
+      }
+
+      const sessaoDescontos = await UsuarioSessaoDesconto.findAll({
+        where: {
+          idUsuarioSessao: usuarioSessao.id,
+        },
+      });
+
+      sessaoDescontos.forEach(async (a) => a.destroy());
+      await usuarioSessao.destroy();
+
+      const sessaoJson = sessao.toJSON();
+      const index = sessaoJson.lugares.findIndex((a) => a.idUsuario === idUsuario);
+      sessaoJson.lugares[index].vendido = false;
+      sessaoJson.lugares[index].idUsuario = null;
+
+      sessao.lugares = sessaoJson.lugares;
+      await sessao.save();
+
+      return res.status(200).send({ message: `Sessão cancelada para o usuário ${idUsuario}` });
+    } catch (error) {
+      return trataError.internalError(res, error);
+    }
+  };
+}

@@ -209,7 +209,7 @@ export default class SessaoController {
         return itemFormatado;
       });
 
-      return res.status(200).send({ message: 'Dados resgatados com sucesso', data: sessoesFiltradas });
+      return res.status(200).send({ message: 'Busca feita com sucesso', data: sessoesFiltradas });
     } catch (error) {
       return trataError.internalError(res, error);
     }

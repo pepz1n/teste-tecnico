@@ -1,0 +1,1413 @@
+openapi: 3.0.3
+info:
+  title: Teste Técnico
+  version: '1.0'
+  description: |-
+    Este é um sistema para controle de vendas de sessões à um cinema, desenvolvido como objetivo de concluir um teste técnico para a empresa Butland Soluções.
+    > _Totalmente desenvolvido por **Bernardo Cortina Zanetti**._
+    
+    Links:
+    - [Repositório](https://github.com/pepz1n/teste-tecnico)
+    - [Linkedin](https://www.linkedin.com/in/bernardo-zanetti-378928233/)
+  contact:
+    email: bebezanetti@gmail.com
+servers:
+  - url: http://localhost:3333
+tags:
+  - name: Descontos
+    description: Controle/CRUD da tabela descontos.
+
+  - name: Padrão Lugares
+    description:  Controle/CRUD da tabela padrao_lugares. 
+  
+  - name: Cargo
+    description: Controle/Crud da tabela cargos.
+
+  - name: Filme
+    description: Controle/Crud da tabela filmes.
+  
+  - name: Sala
+    description: Controle/Crud da tabela salas.
+  
+  - name: Sessões
+    description: Controle/Crud da tabela sessoes
+paths:
+  /desconto:
+    post:
+      tags:
+        - "Descontos"
+      summary: Cria um desconto
+      description: Cria um novo registro na tabela desconto a partir dos dados do body
+      operationId: createDescontos
+      requestBody:
+        required: true
+        description: JSON para a criação de registro
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/descontoCreateReq'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/descontoCreateRes'
+        '500':
+          description: Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalError'
+    get:
+      tags:
+        - "Descontos"
+      summary: Busca os descontos
+      description: Busca todos os descontos no banco de dados.
+      operationId: getDescontos
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getDescontos'
+        '500':
+          description: Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalError'
+
+  /desconto/{id}:
+    post:
+      tags:
+        - "Descontos"
+      summary: Atualiza um registro
+      description: Atualiza um registro "Desconto" passado a partir do id
+      operationId: updateDescontos
+      parameters:
+        - name: id
+          in: path
+          description: id do desconto
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      requestBody:
+        required: true
+        description: JSON para a atualização de registro
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/descontoCreateReq'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/descontoUpdateRes'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequest'
+        '500':
+          description: Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalError'
+    get:
+      tags:
+        - "Descontos"
+      summary: Busca desconto pelo Id
+      description: Busca o registro na tabela desconto a partir do Id informado
+      operationId: getDescontosById
+      parameters:
+        - name: id
+          in: path
+          description: id do desconto
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getDescontosById'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequest'
+        '500':
+          description: Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalError'
+    delete:
+      tags:
+        - "Descontos"
+      summary: Deleta registro do banco
+      description: Deleta um registro do banco a partir do id informado no path
+      operationId: deleteDescontos
+      parameters:
+        - name: id
+          in: path
+          description: id do desconto
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deleteDescontos'
+        '400':
+          description: bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/nenhumIdInformardo'
+        '500':
+          description: Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalError'
+
+  /padrao-lugares:
+    post:
+      tags:
+        - "Padrão Lugares"
+      summary: Cria um registro na tabela padrão lugares
+      description: Cria o registro com base no dados informados no body da requisição.
+      operationId: padraoLugaresCreate
+      requestBody:
+        required: true
+        description: JSON para a criação de registro
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/padraoLugaresCreateReq'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/padraoLugaresCreateRes'
+        '500':
+          description: Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalError'
+    get:
+      tags:
+        - "Padrão Lugares"
+      summary: Busca todos os registros da tabela padrao_lugares
+      description: busca todos os registros.
+      operationId: padraoLugaresGet
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/padraoLugaresGet'
+        '500':
+          description: Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalError'
+  
+  /padrao-lugares/{id}:
+    post:
+      tags:
+        - "Padrão Lugares"
+      summary: Atualiza um registro
+      description: Atualiza um registro "padrão lugares" passado a partir do id
+      operationId: updatePadraoLugaress
+      parameters:
+        - name: id
+          in: path
+          description: id do Padrao lugares
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      requestBody:
+        required: true
+        description: JSON para a atualização de registro
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/padraoLugaresCreateReq'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/padraoLugaresUpdateRes'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequest'
+        '500':
+          description: Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalError'
+    get:
+      tags:
+        - "Padrão Lugares"
+      summary: Busca padrao lugares pelo Id
+      description: Busca o registro na tabela padrao lugares a partir do Id informado
+      operationId: getPadraoLugaresById
+      parameters:
+        - name: id
+          in: path
+          description: id do padrao lugares
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getPadraoLugaresById'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequest'
+        '500':
+          description: Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalError'
+    delete:
+      tags:
+        - "Padrão Lugares"
+      summary: Deleta registro do banco
+      description: Deleta um registro do banco a partir do id informado no path
+      operationId: deletePadraoLugares
+      parameters:
+        - name: id
+          in: path
+          description: id do Padrao lugares
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deleteDescontos'
+        '400':
+          description: bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/nenhumIdInformardo'
+        '500':
+          description: Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalError'
+
+  /cargo:
+    post:
+      tags:
+        - "Cargo"
+      summary: Cria um registro na tabela cargos
+      description: Cria o registro com base no dados informados no body da requisição.
+      operationId: cargoCreate
+      requestBody:
+        required: true
+        description: JSON para a criação de registro
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/cargoCreateReq'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cargoCreateRes'
+        '500':
+          description: Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalError'
+    get:
+      tags:
+        - "Cargo"
+      summary: Busca todos os registros da tabela cargos
+      description: busca todos os registros.
+      operationId: cargoGet
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cargoGet'
+        '500':
+          description: Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalError'
+  
+  /cargo/{id}:
+    post:
+      tags:
+        - "Cargo"
+      summary: Atualiza um registro
+      description: Atualiza um registro "cargo" passado a partir do id
+      operationId: updateCargo
+      parameters:
+        - name: id
+          in: path
+          description: id do Cargo
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      requestBody:
+        required: true
+        description: JSON para a atualização de registro
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/cargoCreateReq'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cargoUpdateRes'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequest'
+        '500':
+          description: Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalError'
+    get:
+      tags:
+        - "Cargo"
+      summary: Busca cargo pelo Id
+      description: Busca o registro na tabela cargo a partir do Id informado
+      operationId: getCargoById
+      parameters:
+        - name: id
+          in: path
+          description: id do cargo
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getCargoById'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequest'
+        '500':
+          description: Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalError'
+    delete:
+      tags:
+        - "Cargo"
+      summary: Deleta registro do banco
+      description: Deleta um registro do banco a partir do id informado no path
+      operationId: deleteCargo
+      parameters:
+        - name: id
+          in: path
+          description: id do Cargo
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deleteDescontos'
+        '400':
+          description: bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/nenhumIdInformardo'
+        '500':
+          description: Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalError'
+
+  /filme:
+    post:
+      tags:
+        - "Filme"
+      summary: Cria um registro na tabela filmes
+      description: Cria o registro com base no dados informados no body da requisição.
+      operationId: filmeCreate
+      requestBody:
+        required: true
+        description: JSON para a criação de registro
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filmeCreateReq'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filmeCreateRes'
+        '500':
+          description: Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalError'
+    get:
+      tags:
+        - "Filme"
+      summary: Busca todos os registros da tabela filmes
+      description: busca todos os registros.
+      operationId: filmeGet
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filmeGet'
+        '500':
+          description: Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalError'
+  
+  /filme/{id}:
+    post:
+      tags:
+        - "Filme"
+      summary: Atualiza um registro
+      description: Atualiza um registro "filme" passado a partir do id
+      operationId: updateFilme
+      parameters:
+        - name: id
+          in: path
+          description: id do Filme
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      requestBody:
+        required: true
+        description: JSON para a atualização de registro
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filmeCreateReq'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/filmeUpdateRes'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequest'
+        '500':
+          description: Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalError'
+    get:
+      tags:
+        - "Filme"
+      summary: Busca filme pelo Id
+      description: Busca o registro na tabela filme a partir do Id informado
+      operationId: getfilmeById
+      parameters:
+        - name: id
+          in: path
+          description: id do filme
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getFIlmeById'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequest'
+        '500':
+          description: Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalError'
+    delete:
+      tags:
+        - "Filme"
+      summary: Deleta registro do banco
+      description: Deleta um registro do banco a partir do id informado no path
+      operationId: deleteFilme
+      parameters:
+        - name: id
+          in: path
+          description: id do Filme
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deleteDescontos'
+        '400':
+          description: bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/nenhumIdInformardo'
+        '500':
+          description: Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalError'
+  
+  /sala:
+    post:
+      tags:
+        - "Sala"
+      summary: Cria um registro na tabela salas
+      description: Cria o registro com base no dados informados no body da requisição.
+      operationId: salaCreate
+      requestBody:
+        required: true
+        description: JSON para a criação de registro
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/salaCreateReq'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/salaCreateRes'
+        '500':
+          description: Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalError'
+    get:
+      tags:
+        - "Sala"
+      summary: Busca todos os registros da tabela salas
+      description: busca todos os registros.
+      operationId: salaGet
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/salaGet'
+        '500':
+          description: Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalError'
+
+  /sala/{id}:
+    post:
+      tags:
+        - "Sala"
+      summary: Atualiza um registro
+      description: Atualiza um registro "sala" passado a partir do id
+      operationId: updateSala
+      parameters:
+        - name: id
+          in: path
+          description: id da Sala
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      requestBody:
+        required: true
+        description: JSON para a atualização de registro
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/salaCreateReq'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/salaUpdateRes'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequest'
+        '500':
+          description: Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalError'
+    get:
+      tags:
+        - "Sala"
+      summary: Busca sala pelo Id
+      description: Busca o registro na tabela sala a partir do Id informado
+      operationId: getSalaById
+      parameters:
+        - name: id
+          in: path
+          description: id da sala
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getSalaById'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequest'
+        '500':
+          description: Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalError'
+    delete:
+      tags:
+        - "Sala"
+      summary: Deleta registro do banco
+      description: Deleta um registro do banco a partir do id informado no path
+      operationId: deleteSala
+      parameters:
+        - name: id
+          in: path
+          description: id da Sala
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deleteDescontos'
+        '400':
+          description: bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/nenhumIdInformardo'
+        '500':
+          description: Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalError'
+  
+  /sessao:
+    post:
+      tags:
+        - "Sessões"
+      summary: Cria um registro na tabela sessoes
+      description: Cria o registro com base no dados informados no body da requisição, campo dataFim e gerado autmáticamente a partir da dataInicio + tempo do filme e campo lugares, gerado automáticamente a partir do padrão lugares da sala.
+      operationId: sessoesCreate
+      requestBody:
+        required: true
+        description: JSON para a criação de registro
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/sessoesCreateReq'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/sessoesCreateRes'
+        '500':
+          description: Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalError'
+    get:
+      tags:
+        - "Sessões"
+      summary: Busca todos os registros da tabela sessoes
+      description: busca todos os registros.
+      operationId: sessoesGet
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/sessoesGet'
+        '500':
+          description: Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalError'
+  
+  /sessao/{id}:
+    post:
+      tags:
+        - "Sessões"
+      summary: Atualiza um registro
+      description: Atualiza um registro "sessao" passado a partir do id, caso compras ja estejam feitas na sessão não será possivel atualizar o idSala.
+      operationId: updateSessao
+      parameters:
+        - name: id
+          in: path
+          description: id da Sessão
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      requestBody:
+        required: true
+        description: JSON para a atualização de registro
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/sessoesCreateReq'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/sessoesUpdateRes'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequest'
+        '500':
+          description: Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalError'
+    get:
+      tags:
+        - "Sessões"
+      summary: Busca Sessões pelo Id
+      description: Busca o registro na tabela sessoes a partir do Id informado
+      operationId: getSessoesById
+      parameters:
+        - name: id
+          in: path
+          description: id da sessão
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getSessoesById'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequest'
+        '500':
+          description: Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalError'
+    delete:
+      tags:
+        - "Sessões"
+      summary: Deleta registro do banco
+      description: Deleta um registro do banco a partir do id informado no path
+      operationId: deleteSessao
+      parameters:
+        - name: id
+          in: path
+          description: id da Sessão
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deleteDescontos'
+        '400':
+          description: bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/nenhumIdInformardo'
+        '500':
+          description: Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalError'
+
+  /sessao/disponiveis:
+    get:
+      tags:
+        - "Sessões"
+      summary: Retorna as sessões disponíveis
+      description: Retorna as sessões disponíveis com base na data Atual
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/sessoesGet'
+        '400':
+          description: bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/sessoesDisponiveisBadRequest'
+        '500':
+          description: Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalError'
+
+  /sessao/relatorio/{idSessao}:
+    get:
+      tags:
+        - "Sessões"
+      summary: Retorna um relatório da sessão
+      description: Retorna um relatório da sessão.
+      parameters:
+        - name: idSessao
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/sessoesRelatorio'
+        '400':
+          description: bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequest'
+        '500':
+          description: Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalError'
+                
+components:
+  schemas:
+    getDescontos:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Busca feita com sucesso,
+        data:
+          type: array
+          example: [{"id":1,"chave":"estudante","valor":"50","porcentagem":true},{"id":2,"chave":"semana","valor":"5","porcentagem":false}]
+
+    getDescontosById:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Busca feita com sucesso
+        data:
+          type: object
+          example: {"id":1,"chave":"estudante","valor":"50","porcentagem":true}
+
+    descontoCreateReq:
+      type: object
+      properties:
+        chave: 
+          type: string
+          example: "estudante"
+        valor:
+          type: string
+          example: "50"
+        porcentagem: 
+          type: boolean
+          example: true
+          default: true
+    
+    descontoCreateRes:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Registro cadastrado com sucesso
+        data:
+          type: object
+          example: {"id":1,"chave":"estudante","valor":"50","porcentagem":true}
+
+    descontoUpdateRes:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Cadastro de id 1 atualizado com sucesso
+        data:
+          type: object
+          example: {"id":1,"chave":"estudante","valor":"50","porcentagem":true}
+    
+    deleteDescontos:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Registro excluído com sucesso
+        data:
+          type: array
+          example: []
+    
+    padraoLugaresCreateReq:
+      type: object
+      properties:
+        lugares:
+          type: array
+          example: [{"id":1,"linha":1,"coluna":1,"vendido":false,"idUsuario":null}, {"id":2,"linha":2,"coluna":1,"vendido":false,"idUsuario":null}]
+
+    padraoLugaresCreateRes:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Registro cadastrado com sucesso
+        data:
+          type: object
+          example: {"id":1,"lugares":[{"id":1,"linha":1,"coluna":1,"vendido":false,"idUsuario":null},{"id":2,"linha":2,"coluna":1,"vendido":false,"idUsuario":null}]}
+
+    padraoLugaresGet:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Busca feita com sucesso
+        data:
+          type: array
+          example: [{"id":1,"lugares":[{"id":1,"linha":1,"coluna":1,"vendido":false,"idUsuario":null},{"id":2,"linha":2,"coluna":1,"vendido":false,"idUsuario":null}]}]
+
+    padraoLugaresUpdateRes:
+      type: object
+      properties:
+        message: 
+          type: string
+          example: "Cadastro de id: 1 atualizado com sucesso"
+        data: 
+          type: object
+          example: {"id":1,"lugares":[{"id":1,"linha":1,"coluna":1,"vendido":false,"idUsuario":null},{"id":2,"linha":2,"coluna":1,"vendido":false,"idUsuario":null}]}
+
+    getPadraoLugaresById:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Busca feita com sucesso
+        data: 
+          type: object
+          example: {"id":1,"lugares":[{"id":1,"linha":1,"coluna":1,"vendido":false,"idUsuario":null},{"id":2,"linha":2,"coluna":1,"vendido":false,"idUsuario":null}]}
+
+    cargoCreateReq:
+      type: object
+      properties:
+        descricao:
+          type: string
+          example: user
+
+    cargoCreateRes:
+      type: object
+      properties:
+        message: 
+          type: string
+          example: Registro cadatrado com sucesso
+        data:
+          type: object
+          example: {id: 1, descricao: 'user'}
+
+    cargoUpdateRes:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Cadastro de id: 1 atualizado com sucesso"
+        data:
+          type: object
+          example: {id: 1, descricao: 'user'}
+
+    cargoGet:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Busca feita com sucesso
+        data:
+          type: array
+          example: [{id: 1, descricao: user}]
+    
+    getCargoById:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Busca feita com sucesso
+        data:
+          type: object
+          example: {id: 1, descricao: user}
+
+    filmeCreateReq:
+      type: object
+      properties:
+        nome:
+          type: string
+          example: Avatar 2
+        descricao:
+          type: string
+          example: muita coisa
+        autor:
+          type: string
+          example: James Cameron
+        duracao:
+          type: integer
+          example: 192
+    
+    filmeCreateRes:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Registro cadastrado com sucesso
+        data:
+          type: object
+          example: {"id":1,"nome":"Avatar 2","descricao":"muita coisa","autor":"James Cameron","duracao":192}
+
+    filmeUpdateRes:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Cadastro de id: 1 atualizado com sucesso"
+        data:
+          type: object
+          example: {"id":1,"nome":"Avatar 2","descricao":"muita coisa","autor":"James Cameron","duracao":192}
+
+    filmeGet:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Busca feita com sucesso
+        data:
+          type: array
+          example: [{"id":1,"nome":"Avatar 2","descricao":"muita coisa","autor":"James Cameron","duracao":192}]
+
+    getFIlmeById:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Busca feita com sucesso
+        data:
+          type: object
+          example: {"id":1,"nome":"Avatar 2","descricao":"muita coisa","autor":"James Cameron","duracao":192}
+
+    salaCreateReq:
+      type: object
+      properties:
+        idPadraoLugares:
+          type: integer
+          example: 1
+        observacao:
+          type: string
+          example: Sala para testes
+
+    getSalaById:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Busca feita com sucesso
+        data:
+          type: object
+          example: {"id":1,"idPadraoLugares":1,"observacao":"Sala para teste"}
+    
+    salaUpdateRes:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Cadastro de id: 1 atualizado com sucesso"
+        data:
+          type: object
+          example: {"id":1,"idPadraoLugares":1,"observacao":"Sala para teste"}
+
+    salaCreateRes:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Registro cadastrado com sucesso
+        data:
+          type: object
+          example: {"id":1,"idPadraoLugares":1,"observacao":"Sala para teste"}
+    
+    salaGet:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Busca feita com sucesso
+        data:
+          type: array
+          example: [{"id":1,"idPadraoLugares":1,"observacao":"Sala para teste"}]
+
+    sessoesCreateReq:
+      type: object
+      properties:
+        idFilme: 
+          type: integer
+          example: 1
+        idSala:
+          type: integer
+          example: 1
+        dataInicio:
+          type: string
+          example: "2023-11-18T16:30:00-03:00"
+        preco:
+          type: number
+          example: 29.99
+    
+    sessoesUpdateRes:
+      type: object
+      properties:
+        message: 
+          type: string
+          example: "Cadastro de id: 10 atualizado com sucesso"
+        data:
+          type: object
+          example: {"id":1,"lugares":[{"id":1,"linha":2,"coluna":1,"vendido":true,"idUsuario":2}],"dataInicio":"2022-01-15T15:31:00-03:00","dataFim":"2022-01-15T18:43:00-03:00","preco":29.99,"idSala":1,"idFilme":1}
+
+    getSessoesById:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Busca feita com sucesso
+        data:
+          type: object
+          example: {"id":1,"lugares":[{"id":1,"linha":2,"coluna":1,"vendido":true,"idUsuario":2}],"dataInicio":"2022-01-15T15:31:00-03:00","dataFim":"2022-01-15T18:43:00-03:00","preco":29.99,"idSala":1,"idFilme":1}
+
+    sessoesCreateRes:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Registro cadastrado com sucesso
+        data:
+          type: object
+          example: {"id":1,"idFilme":1,"idSala":1,"dataInicio":"2023-11-18T16:30:00-03:00","preco":"29.99","dataFim":"2023-11-18T19:42:00-03:00","lugares":[{"id":1,"linha":2,"coluna":1,"vendido":false,"idUsuario":null}]}
+
+    sessoesGet:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Busca feita com sucesso
+        data:
+          type: array
+          example:  [{"id":1,"lugares":[{"id":1,"linha":2,"coluna":1,"vendido":true,"idUsuario":null},{"id":1,"linha":2,"coluna":1,"vendido":false,"idUsuario":null}],"dataInicio":"2023-01-15T15:30:00-03:00","dataFim":"2023-01-15T18:42:00-03:00","preco":"29.99","idSala":1,"idFilme":1},{"id":3,"lugares":[{"id":1,"linha":2,"coluna":1,"vendido":false,"idUsuario":null}],"dataInicio":"2023-01-15T15:30:00-03:00","dataFim":"2023-01-15T18:42:00-03:00","preco":"29.99","idSala":1,"idFilme":1}]
+
+    sessoesDisponiveisBadRequest:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Nenhuma sessão disponivel para a compra!
+        data:
+          type: array
+          example: []
+
+    sessoesRelatorio:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Dados resgatados com sucesso
+        data:
+          type: object
+          example: {vendidos: 2, valorTotal: 33.73}
+
+    internalError:
+      type: object
+      properties:
+        message:
+          type: string
+          example: 'Ops, Ocorreu um erro!'
+        data:
+          type: string
+          example: 'Impossible read "NULL"'
+
+    badRequest:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Nenhum registro encontrado com o id 1
+        data:
+          type: array
+          example: []
+
+    nenhumIdInformardo:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Nenhum id informado!
+        data:
+          type: array
+          example: []

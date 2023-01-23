@@ -14,6 +14,7 @@
   - [PG](https://node-postgres.com/)
   - [SEQUELIZE](https://sequelize.org/)
   - [MOMENTJS](https://momentjs.com/timezone/)
+  - [SWAGGER-UI-EXPRESS](https://www.npmjs.com/package/swagger-ui-express)
 
 ### Dev
   - [NODEMON](https://nodemon.io/)

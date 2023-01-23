@@ -8,7 +8,7 @@ export default class DescontoController {
     const getDesconto = await this.#findDescontoById(id);
 
     if (!getDesconto) {
-      return trataError.badRequest(res, 'Nenhum registro encontrado para ser atualizado!');
+      return trataError.badRequest(res, `Nenhum registro encontrado com o id ${id}`);
     }
 
     Object.keys(dados).forEach((field) => getDesconto[field] = dados[field]);
@@ -70,7 +70,7 @@ export default class DescontoController {
       const response = await this.#findDescontoById(id);
 
       if (!response) {
-        return trataError.badRequest(res, 'Nenhum registro encontrado para ser excluido!');
+        return trataError.badRequest(res, `Nenhum registro encontrado com o id ${id}`);
       }
 
       await response.destroy();

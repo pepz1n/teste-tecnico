@@ -24,7 +24,8 @@
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.40",
     "pg": "^8.8.0",
-    "sequelize": "^6.28.0"
+    "sequelize": "^6.28.0",
+    "swagger-ui-express": "^4.6.0"
   },
   "devDependencies": {
     "eslint": "^8.32.0",

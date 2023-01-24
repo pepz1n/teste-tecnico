@@ -63,4 +63,4 @@
 > Nota: Modelagem feita no [BR Modelo Web](https://app.brmodeloweb.com)
 
 ## **Padrão MVC**
- - O padrão adotado para o projeto foi o MVC(Model, View, Controller) mto difundido junto a lib do Express.
+ - O padrão adotado para o projeto foi o MVC(Model, View, Controller) muito difundido junto a lib do Express.

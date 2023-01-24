@@ -36,7 +36,11 @@
     },
     {
       "name": "Sessões",
-      "description": "Controle/Crud da tabela sessoes"
+      "description": "Controle/Crud da tabela sessoes."
+    },
+    {
+      "name": "Usuário",
+      "description": "Controle/Crud da tabela usuarios."
     }
   ],
   "paths": {
@@ -1603,6 +1607,423 @@
           }
         }
       }
+    },
+    "/usuario": {
+      "post": {
+        "tags": [
+          "Usuário"
+        ],
+        "summary": "Cria um registro na tabela usuarios",
+        "description": "Cria o registro com base no dados informados no body da requisição.",
+        "operationId": "usuarioCreate",
+        "requestBody": {
+          "required": true,
+          "description": "JSON para a criação de registro",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/usuarioCreateReq"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/usuarioCreateRes"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/internalError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Usuário"
+        ],
+        "summary": "Busca todos os registros da tabela usuarios",
+        "description": "busca todos os registros.",
+        "operationId": "usuarioGet",
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/usuarioGet"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/internalError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/usuario/{id}": {
+      "post": {
+        "tags": [
+          "Usuário"
+        ],
+        "summary": "Atualiza um registro",
+        "description": "Atualiza um registro \"usuario\" passado a partir do id.",
+        "operationId": "updateUsuario",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id do Usuário",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": 1
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "JSON para a atualização de registro",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/usuarioCreateReq"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/usuarioUpdateRes"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/badRequest"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/internalError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Usuário"
+        ],
+        "summary": "Busca Usuário pelo Id",
+        "description": "Busca o registro na tabela usuarios a partir do Id informado",
+        "operationId": "getUsuarioById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id do usuario",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getUsuarioById"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/badRequest"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/internalError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Usuário"
+        ],
+        "summary": "Deleta registro do banco",
+        "description": "Deleta um registro do banco a partir do id informado no path",
+        "operationId": "deleteUsuario",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id da usuario",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/deleteDescontos"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/nenhumIdInformardo"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/internalError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/usuario/comprar/{idLugar}": {
+      "post": {
+        "tags": [
+          "Usuário"
+        ],
+        "summary": "Compra a sessão",
+        "description": "Compra a sessão passando idLugar idSessao e idUsuario",
+        "parameters": [
+          {
+            "name": "idLugar",
+            "in": "path",
+            "description": "id do Usuário",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": 1
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "JSON para a criação de registro",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/usuarioComprarSessaoReq"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/usuarioComprarSessaoRes"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/usuarioComprarSessaoBad"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/internalError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/usuario/sessoes/{idUsuario}": {
+      "get": {
+        "tags": [
+          "Usuário"
+        ],
+        "summary": "Sessões futuras",
+        "description": "Retorna as sessões futuras compradas pelo usuario passado no id.",
+        "operationId": "usuarioGetSessoes",
+        "parameters": [
+          {
+            "name": "idUsuario",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/usuarioGetSessao"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/usuarioGetSessaoBad"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/internalError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/usuario/cancelar-sessao": {
+      "post": {
+        "tags": [
+          "Usuário"
+        ],
+        "summary": "Cancelar sessão",
+        "description": "Cancela a compra  da sessão passada no body caso a mesma ainda não tenha começado.",
+        "operationId": "usuarioCancelar",
+        "requestBody": {
+          "required": true,
+          "description": "JSON para o cancelamento da sessão.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/usuarioComprarSessaoReq"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/usuarioCancelarSessao"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/usuarioCancelarSessaoBad"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/internalError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -2314,6 +2735,227 @@
               "vendidos": 2,
               "valorTotal": 33.73
             }
+          }
+        }
+      },
+      "usuarioCreateReq": {
+        "type": "object",
+        "properties": {
+          "nome": {
+            "type": "string",
+            "example": "Bernardo Cortina Zametto"
+          },
+          "email": {
+            "type": "string",
+            "example": "bebezanetti@gmail.com"
+          },
+          "cpf": {
+            "type": "string",
+            "example": "123.456.789-10"
+          },
+          "idCargo": {
+            "type": "integer",
+            "example": 1
+          },
+          "estudante": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "usuarioCreateRes": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Registro cadastrado com sucesso"
+          },
+          "data": {
+            "type": "object",
+            "example": {
+              "id": 4,
+              "nome": "Bernardo Cortina Zanetti",
+              "email": "bebezanetti@gmail.com",
+              "cpf": "089.225.189-20",
+              "idCargo": 1,
+              "estudante": true
+            }
+          }
+        }
+      },
+      "usuarioGet": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Busca feita com sucesso"
+          },
+          "data": {
+            "type": "array",
+            "example": [
+              {
+                "id": 4,
+                "nome": "Bernardo Cortina Zanetti",
+                "email": "bebezanetti@gmail.com",
+                "cpf": "089.225.189-20",
+                "idCargo": 1,
+                "estudante": true
+              }
+            ]
+          }
+        }
+      },
+      "getUsuarioById": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Busca feita com sucesso"
+          },
+          "data": {
+            "type": "object",
+            "example": {
+              "id": 4,
+              "nome": "Bernardo Cortina Zanetti",
+              "email": "bebezanetti@gmail.com",
+              "cpf": "089.225.189-20",
+              "idCargo": 1,
+              "estudante": true
+            }
+          }
+        }
+      },
+      "usuarioUpdateRes": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Cadastro de id: 1 atualizado com sucesso"
+          },
+          "data": {
+            "type": "object",
+            "example": {
+              "id": 4,
+              "nome": "Bernardo Cortina Zanetti",
+              "email": "bebezanetti@gmail.com",
+              "cpf": "089.225.189-20",
+              "idCargo": 1,
+              "estudante": true
+            }
+          }
+        }
+      },
+      "usuarioGetSessao": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "example": [
+              {
+                "Filme": "Avatar 2",
+                "DataFim": "2023-11-15T22:42:00.000Z",
+                "Valor": "29.99",
+                "ValorAtual": "11.24"
+              },
+              {
+                "Filme": "Avatar 2",
+                "DataFim": "2022-01-15T21:43:00.000Z",
+                "Valor": "29.99",
+                "ValorAtual": "11.24"
+              }
+            ]
+          }
+        }
+      },
+      "usuarioGetSessaoBad": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": [
+              "Não existe usuario com o id 1",
+              "Nenhum Id informado",
+              "O usuário não possui nenhuma sessão futura"
+            ]
+          },
+          "data": {
+            "type": "array",
+            "example": []
+          }
+        }
+      },
+      "usuarioComprarSessaoReq": {
+        "type": "object",
+        "properties": {
+          "idUsuario": {
+            "type": "integer",
+            "example": 1
+          },
+          "idSessao": {
+            "type": "integer",
+            "example": 1
+          }
+        }
+      },
+      "usuarioComprarSessaoRes": {
+        "type": "object",
+        "properties": {
+          "Filme": {
+            "type": "string",
+            "example": "Avatar 2"
+          },
+          "Sessão": {
+            "type": "string",
+            "example": "2023-11-15T16:30:00-03:00"
+          },
+          "Valor": {
+            "type": "number",
+            "example": 29.99
+          },
+          "ValorAtual": {
+            "type": "number",
+            "example": 24.99
+          }
+        }
+      },
+      "usuarioComprarSessaoBad": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": [
+              "Informações inválidas'",
+              "Nenhum usuário encontrado com o id 1",
+              "Atendentes não podem comprar ingressos",
+              "nenhuma sessão válida encontrada com o id 1",
+              "Usuário já comprou ingresso para essa sessão!",
+              "Usuário já comprou ingresso para outra(s) sessões neste horário!",
+              "Lugar não encontrado na sessão!",
+              "Lugar escolhido já se encontra vendido!"
+            ]
+          }
+        }
+      },
+      "usuarioCancelarSessao": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Sessão cancelada para usuário 1"
+          }
+        }
+      },
+      "usuarioCancelarSessaoBad": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": [
+              "Informações inválidas",
+              "A sessão id 1 não existe",
+              "O usuário não pode cancelar uma sessão que já aconteceu",
+              "O usuário não tem compra para a sessão"
+            ]
           }
         }
       },

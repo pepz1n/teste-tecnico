@@ -18,4 +18,5 @@ app.use((_, res) => {
 
 app.listen(process.env.API_PORT, () => {
   console.log(`API rodando em http://localhost:${process.env.API_PORT}`);
+  console.log(`DOCS em http://localhost:${process.env.API_PORT}/api-docs/`);
 });
